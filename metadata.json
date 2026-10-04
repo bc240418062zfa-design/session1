@@ -1,0 +1,6 @@
+{
+  "name": "MIHORA.TECH — Week 1: How the Web Works, Dev Environment and Git",
+  "description": "Interactive live teaching platform and student learning portal for MIHORA.TECH Full-Stack Web Development with AI, Week 1 Foundations.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
