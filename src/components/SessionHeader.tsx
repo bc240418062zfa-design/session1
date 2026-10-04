@@ -48,7 +48,7 @@ export const SessionHeader: React.FC<SessionHeaderProps> = ({
         {/* Live Pakistan Clock & Elapsed Session Tracker */}
         <LivePktClock />
 
-        {/* Real Live Session Schedule & Google Meet Logistics */}
+        {/* Real Live Session Schedule & Instructional Logistics */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-1">
           <div className="bg-slate-950/80 p-3.5 rounded-xl border border-slate-800 space-y-1">
             <div className="flex items-center gap-2 text-slate-400 text-xs">
@@ -92,13 +92,13 @@ export const SessionHeader: React.FC<SessionHeaderProps> = ({
           <div className="bg-slate-950/80 p-3.5 rounded-xl border border-slate-800 space-y-1">
             <div className="flex items-center gap-2 text-slate-400 text-xs">
               <UserCheck className="w-3.5 h-3.5 text-purple-400" />
-              <span>Admission Status</span>
+              <span>Submission Goal</span>
             </div>
             <div className="text-xs font-semibold text-purple-300">
-              Pre-Authorized Attendee
+              2 Pull Requests
             </div>
             <div className="text-[11px] text-slate-500 truncate">
-              Zero Lobby Delay
+              Verified on GitHub
             </div>
           </div>
         </div>

@@ -29,16 +29,32 @@ import { LivePktClock } from './LivePktClock';
 interface PresentationModeProps {
   onExit: () => void;
   isInstructorMode: boolean;
+  currentModuleId?: string;
+  themeMode?: string;
 }
+
+const getInitialSegmentIdx = (modId?: string): number => {
+  if (!modId) return 0;
+  if (['mod1', 'how-the-web-works', 'http-dns', 'http-experiment'].includes(modId)) return 0;
+  if (['mod2', 'dev-environment', 'vscode', 'terminal-node'].includes(modId)) return 1;
+  if (['mod3', 'git-fundamentals', 'git-visualizer', 'github-workflow'].includes(modId)) return 2;
+  if (['mod4', 'html-structure', 'semantic-html', 'css-fundamentals', 'css-box-model', 'css-typography-color'].includes(modId)) return 3;
+  if (['mod5', 'profile-lab', 'experiment-lab', 'homework', 'checkpoint', 'deliverable'].includes(modId)) return 4;
+  return 0;
+};
 
 export const PresentationMode: React.FC<PresentationModeProps> = ({
   onExit,
   isInstructorMode,
+  currentModuleId,
+  themeMode = 'light',
 }) => {
-  const [currentSegmentIdx, setCurrentSegmentIdx] = useState<number>(0);
+  const [currentSegmentIdx, setCurrentSegmentIdx] = useState<number>(() => getInitialSegmentIdx(currentModuleId));
   const [slideSubStep, setSlideSubStep] = useState<'concept' | 'demo' | 'checkpoint'>('concept');
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
   const [showInstructorNotes, setShowInstructorNotes] = useState<boolean>(isInstructorMode);
+
+  const isLight = themeMode !== 'dark' && themeMode !== 'classroom';
 
   // Embedded lightweight timer
   const [elapsedSec, setElapsedSec] = useState<number>(0);
@@ -125,17 +141,39 @@ export const PresentationMode: React.FC<PresentationModeProps> = ({
   const segmentCheckpoint = CHECKPOINTS.find((c) => c.segmentId === currentSegment.id);
 
   return (
-    <div className="fixed inset-0 z-50 bg-slate-950 text-slate-100 flex flex-col overflow-hidden select-none">
+    <div
+      className={`fixed inset-0 z-50 flex flex-col overflow-hidden select-none ${
+        isLight
+          ? 'bg-slate-100 text-slate-900 presentation-light'
+          : 'bg-slate-950 text-slate-100'
+      }`}
+    >
       {/* Top Bar for Presentation Mode */}
-      <header className="h-16 px-6 bg-slate-900/95 border-b border-slate-800 flex items-center justify-between shrink-0">
+      <header
+        className={`h-16 px-4 sm:px-6 border-b flex items-center justify-between shrink-0 ${
+          isLight
+            ? 'bg-white border-slate-300 text-slate-900 shadow-sm'
+            : 'bg-slate-900/95 border-slate-800'
+        }`}
+      >
         {/* Left: Brand & Current Segment */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3 sm:gap-4">
           <div className="flex items-center gap-2">
-            <span className="text-sm font-bold tracking-tight text-white font-mono">
-              MIHORA<span className="text-blue-500">.TECH</span>
+            <span
+              className={`text-sm font-bold tracking-tight font-mono ${
+                isLight ? 'text-slate-900' : 'text-white'
+              }`}
+            >
+              MIHORA<span className="text-blue-600">.TECH</span>
             </span>
-            <span className="text-xs text-slate-500">|</span>
-            <span className="text-xs text-slate-400 font-mono">GOOGLE MEET PRESENTATION</span>
+            <span className={isLight ? 'text-slate-400' : 'text-slate-500'}>|</span>
+            <span
+              className={`text-[11px] font-mono font-semibold ${
+                isLight ? 'text-blue-700' : 'text-slate-400'
+              }`}
+            >
+              CLASSROOM PRESENTATION
+            </span>
           </div>
 
           <div className="hidden md:flex items-center gap-2 pl-4 border-l border-slate-800">

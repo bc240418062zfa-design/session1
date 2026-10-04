@@ -90,21 +90,33 @@ export const LivePktClock: React.FC<LivePktClockProps> = ({
 
   if (isCompact) {
     return (
-      <div className={`flex items-center gap-2 text-xs font-mono ${className}`}>
-        <div className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-slate-900 border border-slate-800 text-slate-200">
+      <div className={`flex items-center gap-1.5 text-xs font-mono shrink-0 ${className}`}>
+        <div className="flex items-center gap-1.5 px-2 sm:px-2.5 py-1 rounded bg-slate-900 border border-slate-800 text-slate-200 whitespace-nowrap">
           <Clock className="w-3.5 h-3.5 text-emerald-400" />
           <span className="font-bold text-white">{formattedPktTime}</span>
           <span className="text-[10px] text-emerald-400 font-semibold">PKT</span>
         </div>
         <div
-          className={`flex items-center gap-1.5 px-2.5 py-1 rounded text-[11px] font-semibold ${
+          className={`hidden 2xl:flex items-center gap-1.5 px-2 py-1 rounded text-[11px] font-semibold whitespace-nowrap ${
             isActuallyLive || isSimulatedLive
               ? 'bg-rose-500/20 text-rose-300 border border-rose-500/40 animate-pulse'
               : 'bg-slate-900 border border-slate-800 text-slate-300'
           }`}
+          title={sessionStatusLabel}
         >
           <Radio className="w-3 h-3 text-rose-400" />
           <span>{sessionStatusLabel}</span>
+        </div>
+        <div
+          className={`hidden xl:flex 2xl:hidden items-center gap-1 px-1.5 py-1 rounded text-[10px] font-semibold whitespace-nowrap ${
+            isActuallyLive || isSimulatedLive
+              ? 'bg-rose-500/20 text-rose-300 border border-rose-500/40 animate-pulse'
+              : 'bg-slate-900 border border-slate-800 text-slate-300'
+          }`}
+          title={sessionStatusLabel}
+        >
+          <Radio className="w-2.5 h-2.5 text-rose-400" />
+          <span>{isActuallyLive || isSimulatedLive ? 'LIVE' : '9:30 PM PKT'}</span>
         </div>
       </div>
     );
@@ -112,20 +124,20 @@ export const LivePktClock: React.FC<LivePktClockProps> = ({
 
   return (
     <div
-      className={`bg-slate-950 border border-slate-800 rounded-xl p-3 sm:p-4 flex flex-wrap items-center justify-between gap-3 shadow-md ${className}`}
+      className={`bg-slate-950 border border-slate-800 rounded-xl p-3 sm:p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-md ${className}`}
     >
       {/* Live PKT Time Display */}
       <div className="flex items-center gap-3">
-        <div className="w-9 h-9 rounded-lg bg-emerald-500/10 border border-emerald-500/25 flex items-center justify-center text-emerald-400">
+        <div className="w-9 h-9 rounded-lg bg-emerald-500/10 border border-emerald-500/25 flex items-center justify-center text-emerald-400 shrink-0">
           <Clock className="w-4 h-4" />
         </div>
-        <div>
-          <div className="flex items-center gap-1.5 text-[11px] font-mono text-slate-400">
+        <div className="min-w-0">
+          <div className="flex items-center gap-1.5 text-[11px] font-mono text-slate-400 truncate">
             <span>PAKISTAN STANDARD TIME (PKT)</span>
             <span>·</span>
             <span>{formattedPktDate}</span>
           </div>
-          <div className="flex items-baseline gap-2 font-mono">
+          <div className="flex items-baseline gap-2 font-mono flex-wrap">
             <span className="text-lg sm:text-xl font-extrabold text-white tracking-tight">
               {formattedPktTime}
             </span>
@@ -137,19 +149,19 @@ export const LivePktClock: React.FC<LivePktClockProps> = ({
       </div>
 
       {/* Live Class Schedule Status & Elapsed Time */}
-      <div className="flex items-center gap-3">
-        <div className="text-right">
-          <div className="text-[11px] font-mono text-slate-400">
+      <div className="flex flex-wrap sm:flex-nowrap items-center justify-between sm:justify-end gap-2.5 sm:gap-3 w-full sm:w-auto pt-1 sm:pt-0 border-t sm:border-t-0 border-slate-850">
+        <div className="text-left sm:text-right">
+          <div className="text-[10px] sm:text-[11px] font-mono text-slate-400">
             OFFICIAL CLASS SCHEDULE: 09:30 PM PKT
           </div>
           <div
-            className={`text-xs font-mono font-bold flex items-center gap-1.5 justify-end ${
+            className={`text-xs font-mono font-bold flex items-center gap-1.5 justify-start sm:justify-end ${
               isActuallyLive || isSimulatedLive
                 ? 'text-rose-400 animate-pulse'
                 : 'text-blue-400'
             }`}
           >
-            <Radio className="w-3.5 h-3.5" />
+            <Radio className="w-3.5 h-3.5 shrink-0" />
             <span>{sessionStatusLabel}</span>
           </div>
         </div>
@@ -157,14 +169,14 @@ export const LivePktClock: React.FC<LivePktClockProps> = ({
         {/* Quick Simulation Toggle */}
         <button
           onClick={() => setIsSimulatedLive(!isSimulatedLive)}
-          className={`px-2.5 py-1 rounded text-[11px] font-mono font-semibold border transition-colors ${
+          className={`px-2.5 py-1 rounded text-[11px] font-mono font-semibold border transition-colors shrink-0 ${
             isSimulatedLive
               ? 'bg-rose-500/20 text-rose-300 border-rose-500/50'
               : 'bg-slate-900 hover:bg-slate-800 text-slate-400 border-slate-800 hover:text-slate-200'
           }`}
           title="Toggle Simulation of In-Progress 9:35 PM PKT Live Class"
         >
-          {isSimulatedLive ? 'Reset to Real Clock' : 'Simulate Class Live'}
+          {isSimulatedLive ? 'Reset Clock' : 'Simulate Live'}
         </button>
       </div>
     </div>

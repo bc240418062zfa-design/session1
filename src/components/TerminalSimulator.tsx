@@ -196,7 +196,7 @@ export const TerminalSimulator: React.FC = () => {
       </div>
 
       {/* Mock Terminal Window */}
-      <div className="bg-slate-950 border border-slate-800 rounded-xl overflow-hidden shadow-2xl font-mono text-xs">
+      <div className="terminal-shell bg-slate-950 border border-slate-800 rounded-xl overflow-hidden shadow-2xl font-mono text-xs">
         {/* Window Chrome Titlebar */}
         <div className="bg-slate-900/90 border-b border-slate-800 px-4 py-2.5 flex items-center justify-between select-none">
           <div className="flex items-center gap-2">

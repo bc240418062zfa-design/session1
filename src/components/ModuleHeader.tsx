@@ -17,13 +17,13 @@ export const ModuleHeader: React.FC<ModuleHeaderProps> = ({
   if (!route) return null;
 
   return (
-    <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 md:p-8 space-y-5 shadow-xl relative overflow-hidden">
+    <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-5 shadow-xl relative overflow-hidden">
       {/* Background architectural glow */}
       <div className="absolute top-0 right-0 -mr-16 -mt-16 w-80 h-80 bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
 
       {/* Top breadcrumb & meta row */}
-      <div className="flex flex-wrap items-center justify-between gap-3 relative z-10">
-        <div className="flex flex-wrap items-center gap-2 text-xs font-mono">
+      <div className="flex flex-wrap items-center justify-between gap-2.5 sm:gap-3 relative z-10">
+        <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 text-[11px] sm:text-xs font-mono">
           <span className="text-slate-400">WEEK 01 FOUNDATIONS</span>
           <ChevronRight className="w-3 h-3 text-slate-600" />
           <span className="text-blue-400 font-semibold">{route.category.toUpperCase()}</span>
@@ -33,7 +33,7 @@ export const ModuleHeader: React.FC<ModuleHeaderProps> = ({
           </span>
         </div>
 
-        <div className="flex items-center gap-3 text-xs font-mono text-slate-400">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs font-mono text-slate-400">
           <div className="flex items-center gap-1.5 bg-slate-950 px-2.5 py-1 rounded-md border border-slate-800">
             <Clock className="w-3.5 h-3.5 text-emerald-400" />
             <span>~{route.estimatedMinutes} Min Study Time</span>
@@ -59,7 +59,7 @@ export const ModuleHeader: React.FC<ModuleHeaderProps> = ({
       </div>
 
       {/* Core Learning Takeaway Banner */}
-      <div className="p-4 bg-slate-950/80 rounded-xl border border-slate-800/90 flex items-start gap-3 text-xs text-slate-300 relative z-10">
+      <div className="p-3.5 sm:p-4 bg-slate-950/80 rounded-xl border border-slate-800/90 flex items-start gap-2.5 sm:gap-3 text-xs text-slate-300 relative z-10">
         <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
         <div>
           <strong className="text-white font-mono uppercase tracking-wider text-[11px] block mb-0.5">

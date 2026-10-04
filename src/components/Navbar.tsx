@@ -16,7 +16,7 @@ import {
 import { LivePktClock } from './LivePktClock';
 import { MODULE_ROUTES } from '../data/navigationData';
 
-export type ThemeMode = 'dark' | 'classroom' | 'daylight';
+export type ThemeMode = 'light' | 'classroom' | 'dark';
 
 interface NavbarProps {
   activeSection: string;
@@ -27,6 +27,7 @@ interface NavbarProps {
   onToggleLowPerfMode: () => void;
   themeMode: ThemeMode;
   onThemeChange: (theme: ThemeMode) => void;
+  onOpenPresentationMode?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -38,6 +39,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   onToggleLowPerfMode,
   themeMode,
   onThemeChange,
+  onOpenPresentationMode,
 }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
@@ -63,34 +65,36 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <header className="sticky top-0 z-40 w-full bg-slate-950/95 border-b border-slate-800/80 backdrop-blur-md">
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 h-16 flex items-center justify-between gap-3">
+      <div className="max-w-[1440px] w-full mx-auto px-3 sm:px-4 lg:px-6 h-14 sm:h-16 flex items-center justify-between gap-2 xl:gap-3">
         {/* Zone 1: Brand Wordmark & Live Pakistan Clock */}
-        <div className="flex items-center gap-3 sm:gap-4 shrink-0">
+        <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
           <button
             onClick={() => handleSelectModule('overview')}
-            className="text-left font-mono group"
+            className="text-left font-mono group shrink-0"
           >
             <div className="text-base sm:text-lg font-black tracking-tight text-white whitespace-nowrap">
               MIHORA<span className="text-blue-500">.TECH</span>
             </div>
-            <div className="text-[10px] text-blue-400 font-semibold tracking-wider -mt-1">
+            <div className="text-[10px] text-blue-400 font-semibold tracking-wider -mt-1 whitespace-nowrap">
               WEEK 01 • FOUNDATIONS
             </div>
           </button>
 
           {/* Real-time Pakistan Standard Time (PKT) badge */}
-          <div className="hidden sm:block">
+          <div className="hidden sm:block shrink-0">
             <LivePktClock isCompact={true} />
           </div>
         </div>
 
         {/* Zone 2: Navigation Links & Module Index Switcher */}
-        <nav className="hidden lg:flex items-center gap-1.5 xl:gap-2.5 text-xs font-medium text-slate-400">
-          {primaryNavLinks.slice(0, 7).map((link) => (
+        <nav className="hidden lg:flex items-center gap-1 xl:gap-2 text-xs font-medium text-slate-400">
+          {primaryNavLinks.slice(0, 7).map((link, idx) => (
             <button
               key={link.id}
               onClick={() => handleSelectModule(link.id)}
-              className={`hover:text-slate-100 transition-colors whitespace-nowrap py-1 px-2 rounded-lg ${
+              className={`hover:text-slate-100 transition-colors whitespace-nowrap py-1 px-1.5 xl:px-2 rounded-lg ${
+                idx >= 4 ? 'hidden xl:inline-block' : ''
+              } ${
                 activeSection === link.id
                   ? 'text-blue-400 font-bold bg-blue-500/10 border border-blue-500/30'
                   : 'hover:bg-slate-900'
@@ -101,10 +105,10 @@ export const Navbar: React.FC<NavbarProps> = ({
           ))}
 
           {/* All 24 Modules Dropdown Menu */}
-          <div className="relative">
+          <div className="relative shrink-0">
             <button
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 hover:border-slate-700 text-slate-300 font-mono text-[11px] transition-colors"
+              className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 hover:border-slate-700 text-slate-300 font-mono text-[11px] transition-colors whitespace-nowrap"
             >
               <span>All 24 Topics</span>
               <ChevronDown
@@ -149,10 +153,22 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         {/* Zone 3: Actions & Utility Controls */}
         <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+          {/* Prominent Classroom Presentation Mode Button */}
+          {onOpenPresentationMode && (
+            <button
+              onClick={onOpenPresentationMode}
+              className="flex items-center gap-1.5 p-1.5 sm:px-3 sm:py-1.5 rounded-lg text-xs font-bold bg-blue-600 hover:bg-blue-500 text-white shadow-sm transition-all whitespace-nowrap shrink-0"
+              title="Launch Fullscreen Classroom Presentation (Google Meet Screen Share)"
+            >
+              <Monitor className="w-3.5 h-3.5" />
+              <span className="hidden md:inline">Classroom Mode</span>
+            </button>
+          )}
+
           {/* Prominent Student vs Teacher Mode Switcher */}
           <button
             onClick={onToggleInstructorMode}
-            className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-bold border transition-all shadow-sm ${
+            className={`flex items-center gap-1.5 px-2 sm:px-3 py-1.5 rounded-lg text-xs font-bold border transition-all shadow-sm whitespace-nowrap shrink-0 ${
               isInstructorMode
                 ? 'bg-purple-600 hover:bg-purple-500 text-white border-purple-400'
                 : 'bg-slate-900 hover:bg-slate-800 text-slate-200 border-slate-800 hover:border-slate-700'
@@ -166,18 +182,42 @@ export const Navbar: React.FC<NavbarProps> = ({
             {isInstructorMode ? (
               <>
                 <Briefcase className="w-3.5 h-3.5 text-purple-200" />
-                <span className="font-semibold">👨‍🏫 Teacher Mode</span>
+                <span className="font-semibold hidden sm:inline">Teacher Mode</span>
+                <span className="font-semibold sm:hidden">Teacher</span>
               </>
             ) : (
               <>
                 <GraduationCap className="w-3.5 h-3.5 text-blue-400" />
-                <span className="font-semibold">👨‍🎓 Student Mode</span>
+                <span className="font-semibold hidden sm:inline">Student Mode</span>
+                <span className="font-semibold sm:hidden">Student</span>
               </>
             )}
           </button>
 
-          {/* Theme Switcher */}
-          <div className="hidden sm:flex items-center bg-slate-900 border border-slate-800 rounded-lg p-0.5 text-xs">
+          {/* Theme Switcher: Light (Default) / Classroom / Dark */}
+          <div className="hidden md:flex items-center bg-slate-900 border border-slate-800 rounded-lg p-0.5 text-xs shrink-0">
+            <button
+              onClick={() => onThemeChange('light')}
+              className={`p-1.5 rounded transition-colors ${
+                themeMode === 'light'
+                  ? 'bg-amber-400 text-slate-950 font-bold shadow-sm'
+                  : 'text-slate-400 hover:text-white'
+              }`}
+              title="White Light Theme (Google Meet Screen Share - Recommended)"
+            >
+              <Sun className="w-3.5 h-3.5" />
+            </button>
+            <button
+              onClick={() => onThemeChange('classroom')}
+              className={`p-1.5 rounded transition-colors ${
+                themeMode === 'classroom'
+                  ? 'bg-indigo-600 text-white font-bold shadow-sm'
+                  : 'text-slate-400 hover:text-white'
+              }`}
+              title="Classroom High-Contrast Dark Theme"
+            >
+              <Monitor className="w-3.5 h-3.5" />
+            </button>
             <button
               onClick={() => onThemeChange('dark')}
               className={`p-1.5 rounded transition-colors ${
@@ -188,28 +228,6 @@ export const Navbar: React.FC<NavbarProps> = ({
               title="Studio Dark Theme"
             >
               <Moon className="w-3.5 h-3.5" />
-            </button>
-            <button
-              onClick={() => onThemeChange('classroom')}
-              className={`p-1.5 rounded transition-colors ${
-                themeMode === 'classroom'
-                  ? 'bg-indigo-600 text-white font-bold shadow-sm'
-                  : 'text-slate-400 hover:text-white'
-              }`}
-              title="Classroom Screen-Share Theme"
-            >
-              <Monitor className="w-3.5 h-3.5" />
-            </button>
-            <button
-              onClick={() => onThemeChange('daylight')}
-              className={`p-1.5 rounded transition-colors ${
-                themeMode === 'daylight'
-                  ? 'bg-amber-400 text-slate-950 font-bold'
-                  : 'text-slate-400 hover:text-white'
-              }`}
-              title="Daylight Notes Mode (High Print Contrast)"
-            >
-              <Sun className="w-3.5 h-3.5" />
             </button>
           </div>
 
@@ -255,6 +273,20 @@ export const Navbar: React.FC<NavbarProps> = ({
           <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800">
             <LivePktClock />
           </div>
+
+          {/* Mobile Classroom Presentation CTA */}
+          {onOpenPresentationMode && (
+            <button
+              onClick={() => {
+                onOpenPresentationMode();
+                setIsMobileMenuOpen(false);
+              }}
+              className="w-full flex items-center justify-center gap-2 p-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-md transition-all"
+            >
+              <Monitor className="w-4 h-4" />
+              <span>Launch Classroom Presentation</span>
+            </button>
+          )}
 
           {/* Mobile Mode Switcher */}
           <div className="flex items-center justify-between p-2 rounded-lg bg-slate-900 border border-slate-800">

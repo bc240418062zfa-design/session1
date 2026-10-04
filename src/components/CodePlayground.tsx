@@ -213,17 +213,17 @@ export const CodePlayground: React.FC = () => {
   `;
 
   return (
-    <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 md:p-6 shadow-xl space-y-4">
+    <div className="bg-slate-900 border border-slate-800 rounded-xl p-3.5 sm:p-5 md:p-6 shadow-xl space-y-4">
       {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-4">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-3 sm:pb-4">
         <div>
           <div className="flex items-center gap-2 text-xs text-blue-400 font-medium">
             <span>CLIENT-SIDE SANDBOXED EXPERIMENT</span>
             <span>·</span>
             <span>ZERO SERVER LATENCY</span>
           </div>
-          <h3 className="text-lg font-bold text-white tracking-tight mt-0.5">
-            Interactive HTML5 & CSS Playground
+          <h3 className="text-base sm:text-lg font-bold text-white tracking-tight mt-0.5">
+            Interactive HTML5 &amp; CSS Playground
           </h3>
           <p className="text-xs text-slate-400">
             Edit markup and styling in the browser. See instantaneous sandboxed preview output.
@@ -231,13 +231,13 @@ export const CodePlayground: React.FC = () => {
         </div>
 
         {/* Preset Selector */}
-        <div className="flex items-center gap-1.5 bg-slate-950 p-1 rounded-lg border border-slate-800 text-xs">
-          <span className="text-slate-500 pl-2">Preset:</span>
+        <div className="flex flex-wrap items-center gap-1.5 bg-slate-950 p-1 rounded-lg border border-slate-800 text-xs w-full sm:w-auto">
+          <span className="text-slate-500 pl-1 sm:pl-2">Preset:</span>
           {PRESETS.map((preset) => (
             <button
               key={preset.id}
               onClick={() => loadPreset(preset)}
-              className={`px-2.5 py-1 rounded transition-colors ${
+              className={`px-2.5 py-1 rounded transition-colors text-xs ${
                 selectedPresetId === preset.id
                   ? 'bg-blue-600 text-white font-medium'
                   : 'text-slate-400 hover:text-slate-200'

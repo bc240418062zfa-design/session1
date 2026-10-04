@@ -17,6 +17,7 @@ import {
   Download,
   ShieldCheck,
   Calendar,
+  Monitor,
 } from 'lucide-react';
 import { COURSE_INFO, TIME_MODEL } from '../../data/curriculumData';
 import { MODULE_ROUTES, ModuleRoute } from '../../data/navigationData';
@@ -25,11 +26,13 @@ import { LivePktClock } from '../LivePktClock';
 interface OverviewPageProps {
   onNavigate: (moduleId: string) => void;
   isInstructorMode: boolean;
+  onOpenPresentationMode?: () => void;
 }
 
 export const OverviewPage: React.FC<OverviewPageProps> = ({
   onNavigate,
   isInstructorMode,
+  onOpenPresentationMode,
 }) => {
   // Group routes by category
   const categories: Array<{
@@ -91,13 +94,13 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({
   return (
     <div className="space-y-10 animate-fadeIn max-w-7xl mx-auto pb-16">
       {/* Session Hero Banner */}
-      <div className="relative overflow-hidden bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 md:p-10 shadow-2xl space-y-6">
+      <div className="relative overflow-hidden bg-slate-900 border border-slate-800 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 lg:p-10 shadow-2xl space-y-5 sm:space-y-6">
         <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="relative z-10 space-y-6">
+        <div className="relative z-10 space-y-5 sm:space-y-6">
           {/* Meta badges row */}
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <div className="flex flex-wrap items-center gap-2 text-xs font-mono text-slate-400">
+          <div className="flex flex-wrap items-center justify-between gap-2.5 sm:gap-3">
+            <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 text-xs font-mono text-slate-400">
               <span className="font-bold text-white tracking-wider font-mono">
                 {COURSE_INFO.organization}
               </span>
@@ -114,11 +117,11 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({
           </div>
 
           {/* Title & Headline */}
-          <div className="space-y-3 max-w-4xl">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight leading-tight">
+          <div className="space-y-2 sm:space-y-3 max-w-4xl">
+            <h1 className="text-2xl sm:text-3xl md:text-5xl font-black text-white tracking-tight leading-tight">
               {COURSE_INFO.sessionTitle}
             </h1>
-            <p className="text-base sm:text-lg text-slate-300 leading-relaxed font-sans max-w-3xl">
+            <p className="text-sm sm:text-base md:text-lg text-slate-300 leading-relaxed font-sans max-w-3xl">
               {COURSE_INFO.goal}
             </p>
           </div>
@@ -182,8 +185,8 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({
           </div>
 
           {/* Core Authoritative Mandates: Mentor Note & Class Notes Promise */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
-            <div className="p-4 bg-amber-500/10 rounded-2xl border border-amber-500/30 flex items-start gap-3.5 text-xs text-amber-200">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 pt-1">
+            <div className="p-3.5 sm:p-4 bg-amber-500/10 rounded-2xl border border-amber-500/30 flex items-start gap-3 sm:gap-3.5 text-xs text-amber-200">
               <AlertTriangle className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
               <div className="space-y-1">
                 <strong className="font-mono uppercase text-amber-300 text-[11px] block">
@@ -199,7 +202,7 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({
               </div>
             </div>
 
-            <div className="p-4 bg-blue-950/40 rounded-2xl border border-blue-500/30 flex items-start gap-3.5 text-xs text-blue-200">
+            <div className="p-3.5 sm:p-4 bg-blue-950/40 rounded-2xl border border-blue-500/30 flex items-start gap-3 sm:gap-3.5 text-xs text-blue-200">
               <BookOpen className="w-5 h-5 text-blue-400 shrink-0 mt-0.5" />
               <div className="space-y-1">
                 <strong className="font-mono uppercase text-blue-300 text-[11px] block">
@@ -216,10 +219,21 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({
           </div>
 
           {/* Quick Primary Actions */}
-          <div className="flex flex-wrap items-center gap-3 pt-2">
+          <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 pt-2">
+            {onOpenPresentationMode && (
+              <button
+                onClick={onOpenPresentationMode}
+                className="w-full sm:w-auto px-4 sm:px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-indigo-600/25 transition-all hover:scale-[1.02]"
+                title="Launch Classroom Presentation Mode for live teaching"
+              >
+                <Monitor className="w-4 h-4" />
+                <span>Launch Classroom Presentation</span>
+              </button>
+            )}
+
             <button
               onClick={() => onNavigate('how-the-web-works')}
-              className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm flex items-center gap-2 shadow-lg shadow-blue-600/25 transition-all hover:scale-[1.02]"
+              className="w-full sm:w-auto px-4 sm:px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-blue-600/25 transition-all hover:scale-[1.02]"
             >
               <Play className="w-4 h-4 fill-white" />
               <span>Begin Lesson: How the Web Works (Topic 03)</span>
@@ -227,7 +241,7 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({
 
             <button
               onClick={() => onNavigate('profile-lab')}
-              className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-semibold text-sm flex items-center gap-2 transition-colors"
+              className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 transition-colors"
             >
               <Code className="w-4 h-4 text-emerald-400" />
               <span>Jump to Profile Page Lab (Topic 18)</span>
@@ -235,7 +249,7 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({
 
             <button
               onClick={() => onNavigate('cheat-sheets')}
-              className="px-4 py-2.5 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-300 border border-slate-800 text-sm flex items-center gap-2 transition-colors"
+              className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-300 border border-slate-800 text-xs sm:text-sm flex items-center justify-center gap-2 transition-colors"
             >
               <Download className="w-4 h-4 text-blue-400" />
               <span>Download PDF Cheat Sheets (Topic 23)</span>

@@ -60,7 +60,7 @@ export const TimelineSection: React.FC<TimelineSectionProps> = ({
           </div>
           <div className="font-semibold text-slate-200">5 Minutes Joining & Audio Check</div>
           <p className="text-slate-400 text-[11px] leading-relaxed">
-            Attendance roll, Google Meet verification, setting learning expectations.
+            Attendance roll, audio check, setting learning expectations.
           </p>
         </div>
 

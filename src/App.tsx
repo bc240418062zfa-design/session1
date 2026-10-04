@@ -34,6 +34,7 @@ import { TopicNavBar } from './components/TopicNavBar';
 import { DeepReferenceGuides } from './components/DeepReferenceGuides';
 import { MaterialsSection } from './components/MaterialsSection';
 import { ExtraNotesSection } from './components/ExtraNotesSection';
+import { PresentationMode } from './components/PresentationMode';
 import { Footer } from './components/Footer';
 
 export default function App() {
@@ -41,7 +42,8 @@ export default function App() {
   const [currentView, setCurrentView] = useState<string>('mod1');
   const [isInstructorMode, setIsInstructorMode] = useState<boolean>(true);
   const [isLowPerfMode, setIsLowPerfMode] = useState<boolean>(false);
-  const [themeMode, setThemeMode] = useState<ThemeMode>('dark');
+  const [themeMode, setThemeMode] = useState<ThemeMode>('light');
+  const [isPresentationMode, setIsPresentationMode] = useState<boolean>(false);
 
   const handleNavigate = (viewId: string) => {
     setCurrentView(viewId);
@@ -50,7 +52,7 @@ export default function App() {
 
   return (
     <div
-      className={`min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans theme-${themeMode} ${
+      className={`min-h-screen bg-white text-slate-900 flex flex-col font-sans theme-${themeMode} ${
         isLowPerfMode ? 'low-perf-mode' : ''
       }`}
     >
@@ -64,6 +66,7 @@ export default function App() {
         onToggleLowPerfMode={() => setIsLowPerfMode(!isLowPerfMode)}
         themeMode={themeMode}
         onThemeChange={(m) => setThemeMode(m)}
+        onOpenPresentationMode={() => setIsPresentationMode(true)}
       />
 
       {/* Sequential Master Flow Navigation Header Bar with Rollover, Teacher Mode & PDF Downloads */}
@@ -72,7 +75,18 @@ export default function App() {
         onNavigate={handleNavigate}
         isInstructorMode={isInstructorMode}
         onToggleInstructorMode={() => setIsInstructorMode(!isInstructorMode)}
+        onOpenPresentationMode={() => setIsPresentationMode(true)}
       />
+
+      {/* Fullscreen Classroom Presentation Mode Overlay */}
+      {isPresentationMode && (
+        <PresentationMode
+          onExit={() => setIsPresentationMode(false)}
+          isInstructorMode={isInstructorMode}
+          currentModuleId={currentView}
+          themeMode={themeMode}
+        />
+      )}
 
       {/* Main Container - Responsive Full Page View with Anti-Overflow */}
       <main className="flex-1 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6 w-full min-w-0 overflow-x-hidden">
@@ -165,6 +179,7 @@ export default function App() {
           <OverviewPage
             onNavigate={handleNavigate}
             isInstructorMode={isInstructorMode}
+            onOpenPresentationMode={() => setIsPresentationMode(true)}
           />
         )}
 

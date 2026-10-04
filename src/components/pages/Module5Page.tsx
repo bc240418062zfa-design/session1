@@ -36,15 +36,17 @@ export const Module5Page: React.FC<Module5PageProps> = ({
   return (
     <div className="space-y-8 animate-fadeIn max-w-7xl mx-auto pb-12">
       {/* Module Title Header Banner */}
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 md:p-8 space-y-4 shadow-xl relative overflow-hidden">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-2 text-xs font-mono">
+      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-6 md:p-8 space-y-4 shadow-xl relative overflow-hidden">
+        <div className="flex flex-wrap items-center justify-between gap-2.5 sm:gap-3">
+          <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 text-xs font-mono">
             <span className="px-2.5 py-1 rounded bg-blue-500/20 text-blue-300 border border-blue-500/30 font-bold">
               MODULE 05 OF 05
             </span>
             <span className="text-slate-500">·</span>
             <span className="text-emerald-400 font-semibold flex items-center gap-1">
-              <Clock className="w-3.5 h-3.5" /> 10:21 PM – 10:30 PM PKT (9 Min Agenda / 8 Min Live Core)
+              <Clock className="w-3.5 h-3.5 shrink-0" />
+              <span>10:21 PM – 10:30 PM PKT</span>
+              <span className="hidden sm:inline">(9 Min Agenda / 8 Min Live Core)</span>
             </span>
           </div>
 
@@ -55,10 +57,10 @@ export const Module5Page: React.FC<Module5PageProps> = ({
         </div>
 
         <div className="space-y-2 max-w-4xl">
-          <h1 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight leading-tight">
             Hands-on Lab Walkthrough &amp; Homework Briefing
           </h1>
-          <p className="text-base text-slate-300 leading-relaxed font-sans">
+          <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-sans">
             Building and deploying your personal profile page in plain HTML/CSS with preview link, GitHub version control, dual pull requests, and deliverable submission.
           </p>
         </div>
@@ -124,19 +126,19 @@ export const Module5Page: React.FC<Module5PageProps> = ({
       <CheckpointsSection />
 
       {/* Page Footer Navigation */}
-      <div className="flex flex-wrap items-center justify-between gap-4 p-4 bg-slate-900 rounded-xl border border-slate-800">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 p-4 bg-slate-900 rounded-xl border border-slate-800">
         <button
           onClick={onPrevModule}
-          className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-semibold flex items-center gap-2 transition-colors"
+          className="w-full sm:w-auto px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-semibold flex items-center justify-center gap-2 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
-          <span>Back to Module 04: HTML & CSS</span>
+          <span>Back to Module 04: HTML &amp; CSS</span>
         </button>
 
-        <div className="flex items-center gap-3">
+        <div className="flex flex-col sm:flex-row items-center gap-2.5 sm:gap-3 w-full sm:w-auto">
           <button
             onClick={onExploreMaterials}
-            className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg text-xs font-semibold flex items-center gap-2 transition-colors border border-slate-700"
+            className="w-full sm:w-auto px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg text-xs font-semibold flex items-center justify-center gap-2 transition-colors border border-slate-700"
           >
             <Download className="w-4 h-4 text-blue-400" />
             <span>Download Class Notes &amp; Starter Repo</span>
@@ -144,7 +146,7 @@ export const Module5Page: React.FC<Module5PageProps> = ({
 
           <button
             onClick={onNextModule}
-            className="px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-bold transition-all shadow-md flex items-center gap-1.5"
+            className="w-full sm:w-auto px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-bold transition-all shadow-md flex items-center justify-center gap-1.5"
           >
             <span>Next: Personal Profile Page Lab (13 Steps)</span>
             <ArrowRight className="w-4 h-4" />

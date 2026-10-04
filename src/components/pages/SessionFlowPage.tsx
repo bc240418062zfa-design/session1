@@ -66,7 +66,7 @@ export const SessionFlowPage: React.FC<SessionFlowPageProps> = ({ onNavigate }) 
     <div className="space-y-8 animate-fadeIn max-w-7xl mx-auto pb-16">
       <ModuleHeader
         moduleId="agenda"
-        keyTakeaway="The 60-minute meeting window contains exactly 50 minutes of instructional core surrounded by 5 minutes of orientation and 5 minutes of Q&A. Every minute is mathematically accounted for."
+        keyTakeaway="The 60-minute session window contains exactly 50 minutes of instructional core surrounded by 5 minutes of orientation and 5 minutes of Q&A. Every minute is mathematically accounted for."
       />
 
       {/* Mode Switcher Tabs */}

@@ -30,15 +30,17 @@ export const Module1Page: React.FC<Module1PageProps> = ({
   return (
     <div className="space-y-8 animate-fadeIn max-w-7xl mx-auto pb-12">
       {/* Module Title Header Banner */}
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 md:p-8 space-y-4 shadow-xl relative overflow-hidden">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-2 text-xs font-mono">
+      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-6 md:p-8 space-y-4 shadow-xl relative overflow-hidden">
+        <div className="flex flex-wrap items-center justify-between gap-2.5 sm:gap-3">
+          <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 text-xs font-mono">
             <span className="px-2.5 py-1 rounded bg-blue-500/20 text-blue-300 border border-blue-500/30 font-bold">
               MODULE 01 OF 05
             </span>
             <span className="text-slate-500">·</span>
             <span className="text-emerald-400 font-semibold flex items-center gap-1">
-              <Clock className="w-3.5 h-3.5" /> 09:30 PM – 09:43 PM PKT (13 Min Agenda / 8 Min Live Core)
+              <Clock className="w-3.5 h-3.5 shrink-0" />
+              <span>09:30 PM – 09:43 PM PKT</span>
+              <span className="hidden sm:inline">(13 Min Agenda / 8 Min Live Core)</span>
             </span>
           </div>
 
@@ -49,16 +51,16 @@ export const Module1Page: React.FC<Module1PageProps> = ({
         </div>
 
         <div className="space-y-2 max-w-4xl">
-          <h1 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight leading-tight">
             How Browsers, Servers, HTTP and DNS Work Together
           </h1>
-          <p className="text-base text-slate-300 leading-relaxed font-sans">
+          <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-sans">
             Understanding what happens under the hood when a page loads and how the distributed client-server architecture operates across global networks.
           </p>
         </div>
 
         {/* Goal Banner */}
-        <div className="p-3.5 bg-slate-950/80 rounded-xl border border-slate-800 flex items-start gap-3 text-xs text-slate-300">
+        <div className="p-3.5 sm:p-4 bg-slate-950/80 rounded-xl border border-slate-800 flex items-start gap-2.5 sm:gap-3 text-xs text-slate-300">
           <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
           <div>
             <strong className="text-white font-mono uppercase">Core Learning Goal:</strong>{' '}
@@ -68,7 +70,7 @@ export const Module1Page: React.FC<Module1PageProps> = ({
       </div>
 
       {/* Deep Conceptual Architectural Matrix */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-2">
           <div className="flex items-center gap-2 text-blue-400 font-semibold text-xs uppercase tracking-wider font-mono">
             <Globe className="w-4 h-4" /> 1. The Browser (Client)
@@ -113,9 +115,9 @@ export const Module1Page: React.FC<Module1PageProps> = ({
       <RequestResponseInspector />
 
       {/* Exhaustive Technical Deep Dive: The 7 Stages of Page Load */}
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 md:p-8 space-y-6 shadow-xl">
-        <div className="border-b border-slate-800 pb-3 flex items-center justify-between">
-          <h2 className="text-lg font-bold text-white tracking-tight flex items-center gap-2">
+      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-6 md:p-8 space-y-5 sm:space-y-6 shadow-xl">
+        <div className="border-b border-slate-800 pb-3 flex flex-wrap items-center justify-between gap-2">
+          <h2 className="text-base sm:text-lg font-bold text-white tracking-tight flex items-center gap-2">
             <Layers className="w-4 h-4 text-blue-400" />
             Exhaustive Breakdown: What Happens Between URL & Pixels
           </h2>
@@ -234,19 +236,19 @@ Accept-Encoding: gzip, deflate, br
       </div>
 
       {/* Page Footer Navigation */}
-      <div className="flex flex-wrap items-center justify-between gap-4 p-4 bg-slate-900 rounded-xl border border-slate-800">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 p-4 bg-slate-900 rounded-xl border border-slate-800">
         <button
           onClick={onNavigateHome}
-          className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-semibold transition-colors"
+          className="w-full sm:w-auto px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-semibold transition-colors text-center"
         >
           ← Return to Orientation Dashboard
         </button>
 
         <button
           onClick={onNextModule}
-          className="px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-bold flex items-center gap-2 shadow-md transition-all hover:scale-[1.02]"
+          className="w-full sm:w-auto px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-bold flex items-center justify-center gap-2 shadow-md transition-all hover:scale-[1.02]"
         >
-          <span>Proceed to Module 02: Dev Environment & Terminal</span>
+          <span>Proceed to Module 02: Dev Environment &amp; Terminal</span>
           <ArrowRight className="w-4 h-4" />
         </button>
       </div>

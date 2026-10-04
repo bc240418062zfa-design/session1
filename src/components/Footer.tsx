@@ -42,10 +42,10 @@ export const Footer: React.FC = () => {
 
         <div className="pt-4 border-t border-slate-900 flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-500 font-mono">
           <div>
-            &copy; 2026 MIHORA.TECH. Live instruction via Google Meet ({COURSE_INFO.schedule}).
+            &copy; 2026 MIHORA.TECH. Full-Stack Web Development with AI ({COURSE_INFO.schedule}).
           </div>
           <div className="flex items-center gap-2">
-            <span>Subdomain: session1.mihora.tech</span>
+            <span>Subdomain: sessions.study.mihora.tech</span>
             <span>·</span>
             <span>All materials verified</span>
           </div>

@@ -12,6 +12,7 @@ import {
   Clock,
   User,
   Layers,
+  Monitor,
 } from 'lucide-react';
 import { MASTER_FLOW_STEPS, FlowStep } from '../data/flowData';
 import { MODULE_ROUTES } from '../data/navigationData';
@@ -23,6 +24,7 @@ interface TopicNavBarProps {
   onNavigate: (moduleId: string) => void;
   isInstructorMode: boolean;
   onToggleInstructorMode: () => void;
+  onOpenPresentationMode?: () => void;
 }
 
 export const TopicNavBar: React.FC<TopicNavBarProps> = ({
@@ -30,6 +32,7 @@ export const TopicNavBar: React.FC<TopicNavBarProps> = ({
   onNavigate,
   isInstructorMode,
   onToggleInstructorMode,
+  onOpenPresentationMode,
 }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isDownloadingPdf, setIsDownloadingPdf] = useState(false);
@@ -76,57 +79,57 @@ export const TopicNavBar: React.FC<TopicNavBarProps> = ({
   };
 
   return (
-    <div className="w-full bg-slate-900/95 border-b border-slate-800/80 sticky top-16 z-30 backdrop-blur-md select-none transition-all">
+    <div className="w-full bg-slate-900/95 border-b border-slate-800/80 sticky top-14 sm:top-16 z-30 backdrop-blur-md select-none transition-all">
       {/* Top Banner: Teacher Mode vs Student Mode Status */}
       <div
-        className={`px-3 sm:px-6 py-1.5 text-xs flex flex-wrap items-center justify-between gap-2 border-b transition-colors ${
+        className={`px-2.5 sm:px-4 lg:px-6 py-1 text-xs flex items-center justify-between gap-2 border-b transition-colors ${
           isInstructorMode
             ? 'bg-purple-950/60 border-purple-500/30 text-purple-200'
             : 'bg-blue-950/40 border-blue-500/20 text-blue-200'
         }`}
       >
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
           {isInstructorMode ? (
             <Briefcase className="w-3.5 h-3.5 text-purple-400 shrink-0" />
           ) : (
             <GraduationCap className="w-3.5 h-3.5 text-blue-400 shrink-0" />
           )}
-          <span className="font-semibold tracking-wide">
+          <span className="font-bold tracking-wide shrink-0">
             {isInstructorMode
-              ? '👨‍🏫 TEACHER MODE ACTIVE'
-              : '👨‍🎓 STUDENT MODE ACTIVE'}
+              ? '👨‍🏫 TEACHER MODE'
+              : '👨‍🎓 STUDENT MODE'}
             :
           </span>
-          <span className="text-[11px] opacity-85 hidden sm:inline">
+          <span className="text-[11px] opacity-85 truncate hidden sm:inline">
             {isInstructorMode
               ? 'Showing talking points for Muhammad Shan & Muhammad Matti Ul Hasnain, live pacing timers & answer keys.'
-              : 'Sequential learning path active: Click "Next Module →" to advance through each step.'}
+              : 'Sequential learning path active: advance through each step.'}
           </span>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 shrink-0">
           <button
             onClick={onToggleInstructorMode}
-            className={`px-2.5 py-0.5 rounded text-[11px] font-mono font-bold transition-all border ${
+            className={`px-2 sm:px-2.5 py-0.5 rounded text-[11px] font-mono font-bold transition-all border shrink-0 ${
               isInstructorMode
                 ? 'bg-purple-600 hover:bg-purple-500 text-white border-purple-400 shadow-sm'
                 : 'bg-blue-600 hover:bg-blue-500 text-white border-blue-400 shadow-sm'
             }`}
           >
-            Switch to {isInstructorMode ? '👨‍🎓 Student Mode' : '👨‍🏫 Teacher Mode'}
+            <span className="hidden sm:inline">Switch to </span>{isInstructorMode ? 'Student Mode' : 'Teacher Mode'}
           </button>
         </div>
       </div>
 
       {/* Main Module Rollover Header Bar */}
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 py-2 flex flex-wrap sm:flex-nowrap items-center justify-between gap-3">
-        {/* Left: Previous Button, Current Step Breadcrumb, Next Button */}
-        <div className="flex items-center gap-2 min-w-0 flex-1">
+      <div className="max-w-[1440px] w-full mx-auto px-2 sm:px-4 lg:px-6 py-1.5 sm:py-2 flex items-center justify-between gap-1.5 sm:gap-3 min-w-0">
+        {/* Left: Previous Button & Current Step Breadcrumb */}
+        <div className="flex items-center gap-1 sm:gap-2 min-w-0 flex-1">
           {/* Previous Step Button */}
           <button
             onClick={() => prevStep && onNavigate(prevStep.id)}
             disabled={!prevStep}
-            className={`p-2 rounded-lg border transition-all shrink-0 flex items-center gap-1 ${
+            className={`p-1.5 sm:px-2.5 sm:py-1.5 rounded-lg border transition-all shrink-0 flex items-center gap-1 ${
               prevStep
                 ? 'bg-slate-800 hover:bg-slate-700 text-slate-200 border-slate-700 hover:border-slate-600'
                 : 'bg-slate-900/50 text-slate-600 border-slate-800/40 cursor-not-allowed'
@@ -145,24 +148,24 @@ export const TopicNavBar: React.FC<TopicNavBarProps> = ({
           <div className="relative min-w-0 flex-1">
             <button
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              className="w-full text-left p-1.5 sm:px-3 rounded-lg bg-slate-950/80 hover:bg-slate-950 border border-slate-800 hover:border-slate-700 flex items-center justify-between gap-2 transition-colors group"
+              className="w-full text-left p-1 sm:px-2.5 sm:py-1.5 rounded-lg bg-slate-950/80 hover:bg-slate-950 border border-slate-800 hover:border-slate-700 flex items-center justify-between gap-1.5 sm:gap-2 transition-colors group min-w-0"
             >
-              <div className="min-w-0">
-                <div className="flex items-center gap-1.5 text-[10px] font-mono text-slate-400">
-                  <span className="text-blue-400 font-bold uppercase">
-                    Step {currentStepNumber} of {MASTER_FLOW_STEPS.length}
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center gap-1 sm:gap-1.5 text-[10px] font-mono text-slate-400 truncate">
+                  <span className="text-blue-400 font-bold uppercase shrink-0">
+                    <span className="hidden sm:inline">Step </span>{currentStepNumber}/{MASTER_FLOW_STEPS.length}
                   </span>
                   <span>·</span>
-                  <span className="text-emerald-400 font-semibold">
+                  <span className="text-emerald-400 font-semibold truncate">
                     {currentStep.badge}
                   </span>
                   {currentStep.timeRange && (
-                    <span className="hidden lg:inline text-slate-500 font-mono">
+                    <span className="hidden lg:inline text-slate-500 font-mono truncate">
                       · {currentStep.timeRange}
                     </span>
                   )}
                   {currentStep.speakerOrType && (
-                    <span className="hidden xl:inline text-slate-400 font-mono">
+                    <span className="hidden xl:inline text-slate-400 font-mono truncate">
                       · {currentStep.speakerOrType}
                     </span>
                   )}
@@ -172,7 +175,7 @@ export const TopicNavBar: React.FC<TopicNavBarProps> = ({
                 </div>
               </div>
 
-              <div className="flex items-center gap-1 text-[11px] font-mono text-slate-400 shrink-0 bg-slate-900 px-2 py-1 rounded border border-slate-800">
+              <div className="flex items-center gap-1 text-[11px] font-mono text-slate-400 shrink-0 bg-slate-900 px-1.5 sm:px-2 py-0.5 rounded border border-slate-800 ml-1">
                 <ListFilter className="w-3 h-3 text-blue-400" />
                 <span className="hidden sm:inline">Steps</span>
               </div>
@@ -217,67 +220,60 @@ export const TopicNavBar: React.FC<TopicNavBarProps> = ({
               </div>
             )}
           </div>
-
-          {/* Next Step Button */}
-          <button
-            onClick={() => nextStep && onNavigate(nextStep.id)}
-            disabled={!nextStep}
-            className={`p-2 rounded-lg border transition-all shrink-0 flex items-center gap-1 ${
-              nextStep
-                ? 'bg-blue-600 hover:bg-blue-500 text-white border-blue-500 shadow-sm'
-                : 'bg-slate-900/50 text-slate-600 border-slate-800/40 cursor-not-allowed'
-            }`}
-            title={
-              nextStep
-                ? `Advance to Step ${nextStep.stepNumber}: ${nextStep.shortTitle}`
-                : 'Course completed'
-            }
-          >
-            <span className="text-xs font-semibold hidden md:inline">Next</span>
-            <ChevronRight className="w-4 h-4" />
-          </button>
         </div>
 
-        {/* Right: PDF Download + Big Next Step Action */}
-        <div className="flex items-center gap-2 shrink-0 w-full sm:w-auto justify-end">
+        {/* Right: Presentation + PDF Download + Single Big Next Action */}
+        <div className="flex items-center gap-1 sm:gap-2 shrink-0">
+          {/* Launch Presentation for this topic */}
+          {onOpenPresentationMode && (
+            <button
+              onClick={onOpenPresentationMode}
+              className="flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold transition-all shadow-sm shrink-0 whitespace-nowrap"
+              title="Launch Fullscreen Classroom Presentation for this topic"
+            >
+              <Monitor className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Present</span>
+            </button>
+          )}
+
           {/* Download Notes as PDF */}
           <button
             onClick={handleDownloadCurrentTopicPDF}
             disabled={isDownloadingPdf}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-semibold transition-all shadow-sm"
+            className="flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-semibold transition-all shadow-sm shrink-0 whitespace-nowrap"
             title="Download PDF notes for this current module"
           >
             <Download className="w-3.5 h-3.5 text-emerald-400" />
-            <span className="hidden md:inline">
-              {isDownloadingPdf ? 'Generating PDF...' : 'Notes PDF'}
+            <span className="hidden sm:inline">
+              {isDownloadingPdf ? 'Generating...' : 'PDF'}
             </span>
-            <span className="md:hidden">PDF</span>
           </button>
 
-          {/* Big "Next: [Title] →" Rollover CTA */}
+          {/* Single, Clear Next Step CTA */}
           {nextStep ? (
             <button
               onClick={() => onNavigate(nextStep.id)}
-              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition-all shadow-md hover:scale-[1.02]"
+              className="flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition-all shadow-md hover:scale-[1.02] shrink-0 whitespace-nowrap"
               title={`Advance to ${nextStep.shortTitle}`}
             >
-              <span>Next: {nextStep.shortTitle}</span>
+              <span className="hidden sm:inline">Next: {nextStep.shortTitle}</span>
+              <span className="sm:hidden">Next</span>
               <ChevronRight className="w-3.5 h-3.5" />
             </button>
           ) : (
             <button
               onClick={() => onNavigate('completion')}
-              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition-all"
+              className="flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition-all shrink-0 whitespace-nowrap"
             >
               <CheckCircle2 className="w-3.5 h-3.5" />
-              <span>Finish &amp; Verify</span>
+              <span>Finish</span>
             </button>
           )}
         </div>
       </div>
 
       {/* Horizontal Step Indicator Chips (Scrollable, Clean, Non-Overflowing) */}
-      <div className="bg-slate-950/70 border-t border-slate-800/60 px-3 sm:px-6 py-1.5 overflow-x-auto scrollbar-thin">
+      <div className="bg-slate-950/70 border-t border-slate-800/60 px-3 sm:px-4 lg:px-6 py-1.5 overflow-x-auto scrollbar-thin">
         <div className="flex items-center gap-1.5 min-w-max">
           {MASTER_FLOW_STEPS.map((s, idx) => {
             const isActive = s.id === currentModuleId;
@@ -287,7 +283,7 @@ export const TopicNavBar: React.FC<TopicNavBarProps> = ({
               <button
                 key={s.id}
                 onClick={() => onNavigate(s.id)}
-                className={`px-2.5 py-1 rounded-md text-[11px] font-mono transition-all flex items-center gap-1.5 ${
+                className={`px-2.5 py-1 rounded-md text-[11px] font-mono transition-all flex items-center gap-1.5 shrink-0 ${
                   isActive
                     ? 'bg-blue-600 text-white font-bold shadow-sm'
                     : isPassed

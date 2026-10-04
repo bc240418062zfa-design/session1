@@ -31,15 +31,17 @@ export const Module3Page: React.FC<Module3PageProps> = ({
   return (
     <div className="space-y-8 animate-fadeIn max-w-7xl mx-auto pb-12">
       {/* Module Title Header Banner */}
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 md:p-8 space-y-4 shadow-xl relative overflow-hidden">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-2 text-xs font-mono">
+      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-6 md:p-8 space-y-4 shadow-xl relative overflow-hidden">
+        <div className="flex flex-wrap items-center justify-between gap-2.5 sm:gap-3">
+          <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 text-xs font-mono">
             <span className="px-2.5 py-1 rounded bg-blue-500/20 text-blue-300 border border-blue-500/30 font-bold">
               MODULE 03 OF 05
             </span>
             <span className="text-slate-500">·</span>
             <span className="text-emerald-400 font-semibold flex items-center gap-1">
-              <Clock className="w-3.5 h-3.5" /> 09:56 PM – 10:09 PM PKT (13 Min Agenda / 17 Min Live Core)
+              <Clock className="w-3.5 h-3.5 shrink-0" />
+              <span>09:56 PM – 10:09 PM PKT</span>
+              <span className="hidden sm:inline">(13 Min Agenda / 17 Min Live Core)</span>
             </span>
           </div>
 
@@ -50,10 +52,10 @@ export const Module3Page: React.FC<Module3PageProps> = ({
         </div>
 
         <div className="space-y-2 max-w-4xl">
-          <h1 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight leading-tight">
             Git Fundamentals: Commit, Branch, Push & Pull Requests
           </h1>
-          <p className="text-base text-slate-300 leading-relaxed font-sans">
+          <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-sans">
             Mastering the three trees, branch pointers, remote repositories, and collaborative code reviews on GitHub.
           </p>
         </div>
@@ -210,10 +212,10 @@ git push -u origin feature/profile-bio
       </div>
 
       {/* Page Footer Navigation */}
-      <div className="flex flex-wrap items-center justify-between gap-4 p-4 bg-slate-900 rounded-xl border border-slate-800">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 p-4 bg-slate-900 rounded-xl border border-slate-800">
         <button
           onClick={onPrevModule}
-          className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-semibold flex items-center gap-2 transition-colors"
+          className="w-full sm:w-auto px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-semibold flex items-center justify-center gap-2 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Back to Module 02: Dev Environment</span>
@@ -221,9 +223,9 @@ git push -u origin feature/profile-bio
 
         <button
           onClick={onNextModule}
-          className="px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-bold flex items-center gap-2 shadow-md transition-all hover:scale-[1.02]"
+          className="w-full sm:w-auto px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-bold flex items-center justify-center gap-2 shadow-md transition-all hover:scale-[1.02]"
         >
-          <span>Proceed to Module 04: HTML & CSS Box Model</span>
+          <span>Proceed to Module 04: HTML &amp; CSS Box Model</span>
           <ArrowRight className="w-4 h-4" />
         </button>
       </div>
