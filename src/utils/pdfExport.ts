@@ -26,7 +26,7 @@ export function exportNotesToPDF({
 
   const pageWidth = doc.internal.pageSize.getWidth();
   const pageHeight = doc.internal.pageSize.getHeight();
-  const margin = 16;
+  const margin = 14;
   const contentWidth = pageWidth - margin * 2;
   let cursorY = margin;
 
@@ -34,23 +34,36 @@ export function exportNotesToPDF({
   doc.setFillColor(15, 23, 42); // slate-900
   doc.rect(0, 0, pageWidth, 28, 'F');
 
+  // Blue accent stripe
+  doc.setFillColor(37, 99, 235); // blue-600
+  doc.rect(0, 0, pageWidth, 2.5, 'F');
+
   // Title in header
   doc.setTextColor(255, 255, 255);
   doc.setFont('helvetica', 'bold');
-  doc.setFontSize(14);
-  doc.text('MIHORA.TECH — Week 01: Foundations', margin, 12);
+  doc.setFontSize(13);
+  doc.text('MIHORA.TECH', margin, 11);
 
   doc.setFont('helvetica', 'normal');
-  doc.setFontSize(9);
+  doc.setFontSize(8.5);
   doc.setTextColor(148, 163, 184); // slate-400
   doc.text(
-    `Full-Stack Web Development with AI • ${COURSE_INFO.instructors.map((i) => i.name).join(', ')}`,
+    `Full-Stack Web Development with AI • ${COURSE_INFO.instructors.map((i) => i.name).join(' & ')}`,
     margin,
-    18
+    17
   );
-  doc.text(`Official Student Material • ${new Date().toLocaleDateString()}`, margin, 23);
+  doc.text(
+    `Official Student Study Resource • ${new Date().toLocaleDateString()}`,
+    margin,
+    22
+  );
 
-  cursorY = 36;
+  // Domain link on right
+  doc.setFontSize(7.5);
+  doc.setTextColor(203, 213, 225);
+  doc.text('sessions.study.mihora.tech', pageWidth - margin, 17, { align: 'right' });
+
+  cursorY = 35;
 
   // Document Title
   doc.setTextColor(15, 23, 42);
@@ -58,17 +71,17 @@ export function exportNotesToPDF({
   doc.setFontSize(16);
   const splitTitle = doc.splitTextToSize(title, contentWidth);
   doc.text(splitTitle, margin, cursorY);
-  cursorY += splitTitle.length * 7;
+  cursorY += splitTitle.length * 6.5;
 
   // Category & Subtitle
   doc.setFont('helvetica', 'italic');
-  doc.setFontSize(10);
+  doc.setFontSize(9.5);
   doc.setTextColor(71, 85, 105);
   doc.text(`Category: ${category} | ${subtitle}`, margin, cursorY);
-  cursorY += 8;
+  cursorY += 7;
 
   // Divider
-  doc.setDrawColor(203, 213, 225);
+  doc.setDrawColor(226, 232, 240);
   doc.line(margin, cursorY, pageWidth - margin, cursorY);
   cursorY += 8;
 
@@ -77,58 +90,81 @@ export function exportNotesToPDF({
     // Check page break for section heading
     if (cursorY > pageHeight - 35) {
       doc.addPage();
-      cursorY = margin + 5;
+      // Secondary header on continuation pages
+      doc.setFillColor(15, 23, 42);
+      doc.rect(0, 0, pageWidth, 13, 'F');
+      doc.setFillColor(37, 99, 235);
+      doc.rect(0, 0, pageWidth, 1.5, 'F');
+      doc.setTextColor(255, 255, 255);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(8.5);
+      doc.text(`MIHORA.TECH — ${title}`, margin, 8.5);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(7.5);
+      doc.setTextColor(148, 163, 184);
+      doc.text('sessions.study.mihora.tech', pageWidth - margin, 8.5, { align: 'right' });
+      cursorY = 20;
     }
 
-    // Section Heading
+    // Section Heading with accent indicator
+    doc.setFillColor(37, 99, 235);
+    doc.rect(margin, cursorY, 2.5, 4.5, 'F');
+
     doc.setFont('helvetica', 'bold');
-    doc.setFontSize(12);
-    doc.setTextColor(30, 41, 59); // slate-800
-    doc.text(sec.heading, margin, cursorY);
-    cursorY += 6;
+    doc.setFontSize(11);
+    doc.setTextColor(15, 23, 42); // slate-900
+    doc.text(sec.heading.toUpperCase(), margin + 4.5, cursorY + 3.8);
+    cursorY += 7;
 
     // Section Content
     doc.setFont('helvetica', 'normal');
-    doc.setFontSize(9.5);
+    doc.setFontSize(8.8);
     doc.setTextColor(51, 65, 85); // slate-700
     const lines = doc.splitTextToSize(sec.content, contentWidth);
 
     for (const line of lines) {
       if (cursorY > pageHeight - 20) {
         doc.addPage();
-        cursorY = margin + 5;
+        cursorY = 20;
       }
       doc.text(line, margin, cursorY);
-      cursorY += 5;
+      cursorY += 4.5;
     }
-    cursorY += 2;
+    cursorY += 3;
 
     // Optional Code Snippet
     if (sec.codeSnippet) {
       const codeLines = doc.splitTextToSize(sec.codeSnippet, contentWidth - 8);
-      const codeBoxHeight = codeLines.length * 4.5 + 6;
+      const codeBoxHeight = codeLines.length * 3.8 + 6;
 
       if (cursorY + codeBoxHeight > pageHeight - 20) {
         doc.addPage();
-        cursorY = margin + 5;
+        cursorY = 20;
       }
 
-      // Code background box
-      doc.setFillColor(241, 245, 249); // slate-100
-      doc.setDrawColor(203, 213, 225);
-      doc.roundedRect(margin, cursorY, contentWidth, codeBoxHeight, 2, 2, 'FD');
+      // Dark code background box
+      doc.setFillColor(15, 23, 42); // slate-900
+      doc.roundedRect(margin, cursorY, contentWidth, codeBoxHeight, 1.5, 1.5, 'F');
+
+      // Terminal dots
+      doc.setFillColor(239, 68, 68);
+      doc.circle(margin + 4, cursorY + 3, 1, 'F');
+      doc.setFillColor(234, 179, 8);
+      doc.circle(margin + 7.5, cursorY + 3, 1, 'F');
+      doc.setFillColor(34, 197, 94);
+      doc.circle(margin + 11, cursorY + 3, 1, 'F');
 
       doc.setFont('courier', 'normal');
-      doc.setFontSize(8.5);
-      doc.setTextColor(15, 23, 42);
+      doc.setFontSize(7.5);
+      doc.setTextColor(226, 232, 240); // slate-200
 
-      let codeY = cursorY + 5;
+      let codeY = cursorY + 6.5;
       for (const cLine of codeLines) {
         doc.text(cLine, margin + 4, codeY);
-        codeY += 4.5;
+        codeY += 3.8;
       }
 
-      cursorY += codeBoxHeight + 6;
+      cursorY += codeBoxHeight + 5;
       doc.setFont('helvetica', 'normal');
     }
 
@@ -139,14 +175,22 @@ export function exportNotesToPDF({
   const totalPages = doc.getNumberOfPages();
   for (let p = 1; p <= totalPages; p++) {
     doc.setPage(p);
+    doc.setDrawColor(226, 232, 240);
+    doc.line(margin, pageHeight - 11, pageWidth - margin, pageHeight - 11);
+
     doc.setFont('helvetica', 'normal');
-    doc.setFontSize(8);
+    doc.setFontSize(7.5);
     doc.setTextColor(148, 163, 184);
     doc.text(
-      `MIHORA.TECH — Week 01 Foundations • Page ${p} of ${totalPages}`,
-      pageWidth / 2,
-      pageHeight - 8,
-      { align: 'center' }
+      `MIHORA.TECH — Week 01 Foundations • ${title}`,
+      margin,
+      pageHeight - 6.5
+    );
+    doc.text(
+      `Page ${p} of ${totalPages}`,
+      pageWidth - margin,
+      pageHeight - 6.5,
+      { align: 'right' }
     );
   }
 

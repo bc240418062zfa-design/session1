@@ -293,29 +293,9 @@ body:not(.theme-dark):not(.theme-classroom) {
   color: #0f172a !important;
 }
 
-/* Presentation Mode in Light Theme */
-.presentation-light {
-  background-color: #f1f5f9 !important;
-  color: #0f172a !important;
-}
-
-.presentation-light header,
-.presentation-light footer {
-  background-color: #ffffff !important;
-  border-color: #cbd5e1 !important;
-  color: #0f172a !important;
-}
-
-.presentation-light .bg-slate-900 {
-  background-color: #ffffff !important;
-  border-color: #cbd5e1 !important;
-  color: #0f172a !important;
-}
-
-.presentation-light .bg-slate-950 {
-  background-color: #f8fafc !important;
-  border-color: #cbd5e1 !important;
-  color: #0f172a !important;
+/* Presentation Mode Canvas Clean Reset */
+.presentation-stage {
+  color-scheme: dark;
 }
 
 /* ==========================================================================
